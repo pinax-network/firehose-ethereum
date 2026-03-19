@@ -530,6 +530,59 @@ func TestRPCEngine_ethGetBalance_retryWithFallback(t *testing.T) {
 	)
 }
 
+func TestRPCEngine_ethGetBalance_immediateLatestFallback(t *testing.T) {
+	err := os.Setenv(EthCallFallbackDurationEnvVar, "-1h")
+	require.NoError(t, err)
+	defer os.Unsetenv(EthCallFallbackDurationEnvVar)
+
+	ctx := context.Background()
+	ctx = reqctx.WithEthCallFallbackToLatestDuration(ctx, -1*time.Hour)
+
+	count := 0
+	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		buffer := bytes.NewBuffer(nil)
+		_, err := buffer.ReadFrom(r.Body)
+		require.NoError(t, err)
+
+		count++
+		assert.Equal(t,
+			`[{"params":["0xea674fdde714fd979de3edf0f56aa9716b898ec8","latest"],"method":"eth_getBalance","jsonrpc":"2.0","id":"0x1"}]`,
+			buffer.String(),
+		)
+		w.Write([]byte(`{"jsonrpc":"2.0","id":"0x1","result":"0x01"}`))
+	}))
+	defer server.Close()
+
+	engine, err := NewRPCEngine([]string{server.URL}, []string{server.URL}, 50_000_000)
+	require.NoError(t, err)
+
+	reqProto := &pbethss.RpcGetBalanceRequests{
+		Requests: []*pbethss.RpcGetBalanceRequest{{
+			Address: eth.MustNewAddress("0xea674fdde714fd979de3edf0f56aa9716b898ec8"),
+			Block:   clockBlock1.Id,
+		}},
+	}
+	in, err := proto.Marshal(reqProto)
+	require.NoError(t, err)
+
+	out, det, err := engine.ethGetBalance(ctx, 1, "traceID", clockBlock1, in)
+	require.NoError(t, err)
+	require.True(t, det)
+	require.Equal(t, 1, count)
+
+	got := &pbethss.RpcGetBalanceResponses{}
+	require.NoError(t, proto.Unmarshal(out, got))
+
+	assertProtoEqual(t,
+		&pbethss.RpcGetBalanceResponses{
+			Responses: []*pbethss.RpcGetBalanceResponse{
+				{Balance: eth.MustNewBytes("0x01"), Failed: false},
+			},
+		},
+		got,
+	)
+}
+
 func TestRPCEngine_rpcCalls_useBlockNumber_olderThanDuration(t *testing.T) {
 	ctx := context.Background()
 	ctx = reqctx.WithEthCallUseBlockNumberDuration(ctx, 1*time.Hour)

@@ -240,12 +240,20 @@ func (e *RPCEngine) ethGetBalance(
 	}
 
 	rpcReqs := make([]*rpc.RPCRequest, len(reqMsg.Requests))
+	fallbackDuration := reqctx.EthCallFallbackToLatestDuration(ctx)
+	forceLatestBlock := fallbackDuration < 0
+	if !forceLatestBlock && fallbackDuration != 0 && clock != nil && clock.Timestamp != nil {
+		forceLatestBlock = time.Since(clock.Timestamp.AsTime()) > fallbackDuration
+	}
+
 	for i, r := range reqMsg.Requests {
 		addrHex := "0x" + hex.EncodeToString(r.Address)
 
-		// Add 0x prefix to block hash
 		blockParam := r.Block
-		if blockParam != "" && !strings.HasPrefix(blockParam, "0x") {
+		if forceLatestBlock {
+			blockParam = "latest"
+		} else if blockParam != "" && !strings.HasPrefix(blockParam, "0x") {
+			// Add 0x prefix to block hash
 			blockParam = "0x" + blockParam
 		}
 
