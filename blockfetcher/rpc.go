@@ -117,9 +117,6 @@ func (f *BlockFetcher) Fetch(ctx context.Context, rpcClient *rpc.Client, blockNu
 	if err != nil {
 		return nil, err
 	}
-	if ethBlock == nil {
-		return nil, fmt.Errorf("fetching block %d: block fetcher returned nil protobuf block", blockNum)
-	}
 
 	anyBlock, err := anypb.New(ethBlock)
 	if err != nil {

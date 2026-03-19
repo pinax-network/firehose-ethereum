@@ -23,8 +23,9 @@ func TestBlockFetcherFetchPBEthReturnsErrorOnNilRPCBlock(t *testing.T) {
 	}))
 	defer server.Close()
 
+	called := false
 	fetcher := NewBlockFetcher(0, 0, 1, func(*rpc.Block, map[string]*rpc.TransactionReceipt, map[string][]eth.Log, *zap.Logger) (*pbeth.Block, map[string]bool) {
-		t.Fatal("toEthBlock should not be called when the RPC block is nil")
+		called = true
 		return nil, nil
 	}, zap.NewNop())
 	fetcher.latest = 1
@@ -32,6 +33,7 @@ func TestBlockFetcherFetchPBEthReturnsErrorOnNilRPCBlock(t *testing.T) {
 	block, err := fetcher.FetchPBEth(context.Background(), rpc.NewClient(server.URL), 1)
 	require.Nil(t, block)
 	require.EqualError(t, err, "fetching block 1: rpc returned nil block")
+	require.False(t, called)
 }
 
 func TestBlockFetcherFetchReturnsErrorInsteadOfPanickingOnNilConvertedBlock(t *testing.T) {
