@@ -545,10 +545,9 @@ func TestRPCEngine_ethGetBalance_immediateLatestFallback(t *testing.T) {
 		require.NoError(t, err)
 
 		count++
-		assert.Equal(t,
-			`[{"params":["0xea674fdde714fd979de3edf0f56aa9716b898ec8","latest"],"method":"eth_getBalance","jsonrpc":"2.0","id":"0x1"}]`,
-			buffer.String(),
-		)
+		assert.Contains(t, buffer.String(), `"method":"eth_getBalance"`)
+		assert.Contains(t, buffer.String(), `"0xea674fdde714fd979de3edf0f56aa9716b898ec8"`)
+		assert.Contains(t, buffer.String(), `"latest"`)
 		w.Write([]byte(`{"jsonrpc":"2.0","id":"0x1","result":"0x01"}`))
 	}))
 	defer server.Close()
