@@ -80,6 +80,9 @@ func (f *BlockFetcher) FetchPBEth(ctx context.Context, rpcClient *rpc.Client, bl
 	if err != nil {
 		return nil, fmt.Errorf("fetching block %d: %w", blockNum, err)
 	}
+	if rpcBlock == nil {
+		return nil, fmt.Errorf("fetching block %d: rpc returned nil block", blockNum)
+	}
 
 	blockHash := eth.Bytes(rpcBlock.Hash.Bytes())
 	var receipts map[string]*rpc.TransactionReceipt
@@ -102,6 +105,10 @@ func (f *BlockFetcher) FetchPBEth(ctx context.Context, rpcClient *rpc.Client, bl
 	f.lastFetchAt = time.Now()
 
 	ethBlock, _ := f.toEthBlock(rpcBlock, receipts, logs, f.logger)
+	if ethBlock == nil {
+		return nil, fmt.Errorf("converting block %d %q: converter returned nil protobuf block", rpcBlock.Number, rpcBlock.Hash.Pretty())
+	}
+
 	return ethBlock, nil
 }
 
@@ -109,6 +116,9 @@ func (f *BlockFetcher) Fetch(ctx context.Context, rpcClient *rpc.Client, blockNu
 	ethBlock, err := f.FetchPBEth(ctx, rpcClient, blockNum)
 	if err != nil {
 		return nil, err
+	}
+	if ethBlock == nil {
+		return nil, fmt.Errorf("fetching block %d: block fetcher returned nil protobuf block", blockNum)
 	}
 
 	anyBlock, err := anypb.New(ethBlock)
