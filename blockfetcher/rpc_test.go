@@ -213,12 +213,14 @@ func TestBlockFetcher_FetchPBEth_NilBlockResponse(t *testing.T) {
 	defer server.Close()
 
 	client := rpc.NewClient(server.URL)
+	toEthBlockCalled := false
 	fetcher := NewBlockFetcher(0, 0, 1, func(in *rpc.Block, receipts map[string]*rpc.TransactionReceipt, logs map[string][]eth.Log, logger *zap.Logger) (*pbeth.Block, map[string]bool) {
-		t.Fatal("toEthBlock should not be called when block response is nil")
-		return nil, nil
+		toEthBlockCalled = true
+		return &pbeth.Block{}, nil
 	}, zap.NewNop())
 
 	_, err := fetcher.FetchPBEth(context.Background(), client, 10)
 	require.Error(t, err)
 	assert.Contains(t, err.Error(), "rpc returned nil block")
+	assert.False(t, toEthBlockCalled)
 }
