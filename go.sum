@@ -2211,6 +2211,8 @@ github.com/pierrec/lz4/v4 v4.1.15/go.mod h1:gZWDp/Ze/IJXGXf23ltt2EXimqmTUXEy0GFu
 github.com/pierrec/lz4/v4 v4.1.18/go.mod h1:gZWDp/Ze/IJXGXf23ltt2EXimqmTUXEy0GFuRQyBid4=
 github.com/pierrec/lz4/v4 v4.1.21 h1:yOVMLb6qSIDP67pl/5F7RepeKYu/VmTyEXvuMI5d9mQ=
 github.com/pierrec/lz4/v4 v4.1.21/go.mod h1:gZWDp/Ze/IJXGXf23ltt2EXimqmTUXEy0GFuRQyBid4=
+github.com/pinax-network/firehose-core v0.0.0-20260609161153-1f14ae8b19ea h1:Ai5vBzs8VwWa0F9uadxEN5r5LvKoT5Er+Bsxa8CqU4Q=
+github.com/pinax-network/firehose-core v0.0.0-20260609161153-1f14ae8b19ea/go.mod h1:d7yrhoW1fyzfxu6bDqvUl4nzrAzVjAo1hWJJtEA3N7s=
 github.com/pinax-network/graph-networks-libs/packages/golang v0.7.0 h1:chRRgzgzmFzICbB/8ybY1IDqvxVgjV415M0AsIYmUHQ=
 github.com/pinax-network/graph-networks-libs/packages/golang v0.7.0/go.mod h1:G76L6ql7YCygVzN45BmtSBqA+qwcDuFWMM42tDnGJbE=
 github.com/pkg/browser v0.0.0-20240102092130-5ac0b6a4141c h1:+mdjkGKdHQG3305AYmdv1U2eRNDiU2ErMBj1gwrq8eQ=
@@ -2335,8 +2337,6 @@ github.com/streamingfast/eth-go v0.0.0-20260318130445-6d6ccaf27155 h1:/rjrpRHJAI
 github.com/streamingfast/eth-go v0.0.0-20260318130445-6d6ccaf27155/go.mod h1:zLYYt0y7LxdB5KDbKg70AuwU48Wq02d8E79tHVkqEzA=
 github.com/streamingfast/firehose v0.1.1-0.20240118135215-dcf04d40bfcd h1:t5n8dDcgUi7t36Qwxm19K4H2vyOLJfY6MHxTbOvK1z8=
 github.com/streamingfast/firehose v0.1.1-0.20240118135215-dcf04d40bfcd/go.mod h1:du6tys2Q6X2pRQ3JbCziWiy7Y7KrOcl4CSb9uiGsVxA=
-github.com/streamingfast/firehose-core v1.14.5-0.20260601154750-a7db8ec6b293 h1:bC9WWiMZSCbOCDHF63i06amuHTcVaZeKZG4hGb4oxjw=
-github.com/streamingfast/firehose-core v1.14.5-0.20260601154750-a7db8ec6b293/go.mod h1:d7yrhoW1fyzfxu6bDqvUl4nzrAzVjAo1hWJJtEA3N7s=
 github.com/streamingfast/firehose-ethereum/types v0.0.0-20260420191823-8b3fce4bf77a h1:/Sk0IWgUB5+FOwjSIfWAfUyW4tPBE7FJPHU8Zde8vqQ=
 github.com/streamingfast/firehose-ethereum/types v0.0.0-20260420191823-8b3fce4bf77a/go.mod h1:+ala1ZHyPZy6QZwTw3k7V6tHQ2bXFKP8wIldp2SUJ9Y=
 github.com/streamingfast/firehose-networks v0.2.2 h1:araNCSHVa9C8+7hGrxNJYt8TlbK65kNDxQMBJuzBjxA=

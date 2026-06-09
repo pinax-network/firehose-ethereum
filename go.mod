@@ -282,3 +282,5 @@ replace (
 )
 
 retract v1.4.5 //included private repositories
+
+replace github.com/streamingfast/firehose-core => github.com/pinax-network/firehose-core v0.0.0-20260609161153-1f14ae8b19ea
