@@ -285,4 +285,4 @@ replace (
 
 retract v1.4.5 //included private repositories
 
-replace github.com/streamingfast/firehose-core => github.com/YaroShkvorets/firehose-core v0.0.0-20260717183157-6581acaf1a2a
+replace github.com/streamingfast/firehose-core => github.com/YaroShkvorets/firehose-core v0.0.0-20260717190019-0ab565cafda0
