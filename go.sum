@@ -2197,8 +2197,8 @@ github.com/pierrec/lz4/v4 v4.1.21 h1:yOVMLb6qSIDP67pl/5F7RepeKYu/VmTyEXvuMI5d9mQ
 github.com/pierrec/lz4/v4 v4.1.21/go.mod h1:gZWDp/Ze/IJXGXf23ltt2EXimqmTUXEy0GFuRQyBid4=
 github.com/pinax-network/graph-networks-libs/packages/golang v0.7.0 h1:chRRgzgzmFzICbB/8ybY1IDqvxVgjV415M0AsIYmUHQ=
 github.com/pinax-network/graph-networks-libs/packages/golang v0.7.0/go.mod h1:G76L6ql7YCygVzN45BmtSBqA+qwcDuFWMM42tDnGJbE=
-github.com/pinax-network/substreams-sf v1.20.2-0.20260716212051-99c38a61ba1d h1:z6HrerF1es+hXVW5lXUs1qGskwWwz8+I2BkxcLoCLS4=
-github.com/pinax-network/substreams-sf v1.20.2-0.20260716212051-99c38a61ba1d/go.mod h1:MlJoMtfHq2HroLpaDvcAZZ6fz1yXKI9auWeBZ+2AMGc=
+github.com/pinax-network/substreams-sf v1.20.2-0.20260716212051-5e994c0728d4 h1:Fr12bYbNsPnL68CIoXwtH3GtWWLt33Y9UzmL9aVW6c8=
+github.com/pinax-network/substreams-sf v1.20.2-0.20260716212051-5e994c0728d4/go.mod h1:MlJoMtfHq2HroLpaDvcAZZ6fz1yXKI9auWeBZ+2AMGc=
 github.com/pkg/browser v0.0.0-20240102092130-5ac0b6a4141c h1:+mdjkGKdHQG3305AYmdv1U2eRNDiU2ErMBj1gwrq8eQ=
 github.com/pkg/browser v0.0.0-20240102092130-5ac0b6a4141c/go.mod h1:7rwL4CYBLnjLxUqIJNnCWiEdr3bn6IUYi15bNlnbCCU=
 github.com/pkg/diff v0.0.0-20210226163009-20ebb0f2a09e/go.mod h1:pJLUxLENpZxwdsKMEsNbx1VGcRFpLqf3715MtcvvzbA=

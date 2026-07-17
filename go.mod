@@ -287,4 +287,4 @@ replace (
 
 retract v1.4.5 //included private repositories
 
-replace github.com/streamingfast/substreams => github.com/pinax-network/substreams-sf v1.20.2-0.20260716212051-99c38a61ba1d
+replace github.com/streamingfast/substreams => github.com/pinax-network/substreams-sf v1.20.2-0.20260716212051-5e994c0728d4
