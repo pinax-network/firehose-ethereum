@@ -11,8 +11,10 @@ import (
 
 	"github.com/streamingfast/eth-go"
 	"github.com/streamingfast/eth-go/rpc"
+	pbeth "github.com/streamingfast/firehose-ethereum/types/pb/sf/ethereum/type/v2"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
+	"go.uber.org/zap"
 )
 
 var (
@@ -187,4 +189,38 @@ func TestFetchReceipts_BatchSuccess(t *testing.T) {
 	require.NoError(t, err)
 	require.True(t, batchCalled)
 	require.Len(t, out, 2)
+}
+
+func TestBlockFetcher_FetchPBEth_NilBlockResponse(t *testing.T) {
+	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		buffer := bytes.NewBuffer(nil)
+		_, err := buffer.ReadFrom(r.Body)
+		require.NoError(t, err)
+
+		var req map[string]interface{}
+		err = json.Unmarshal(buffer.Bytes(), &req)
+		require.NoError(t, err)
+
+		switch req["method"].(string) {
+		case "eth_blockNumber":
+			w.Write([]byte(`{"jsonrpc":"2.0","id":"0x1","result":"0xa"}`))
+		case "eth_getBlockByNumber":
+			w.Write([]byte(`{"jsonrpc":"2.0","id":"0x1","result":null}`))
+		default:
+			t.Fatalf("unexpected method: %s", req["method"].(string))
+		}
+	}))
+	defer server.Close()
+
+	client := rpc.NewClient(server.URL)
+	toEthBlockCalled := false
+	fetcher := NewBlockFetcher(0, 0, 1, func(in *rpc.Block, receipts map[string]*rpc.TransactionReceipt, logs map[string][]eth.Log, logger *zap.Logger) (*pbeth.Block, map[string]bool) {
+		toEthBlockCalled = true
+		return &pbeth.Block{}, nil
+	}, zap.NewNop())
+
+	_, err := fetcher.FetchPBEth(context.Background(), client, 10)
+	require.Error(t, err)
+	assert.Contains(t, err.Error(), "rpc returned nil block")
+	assert.False(t, toEthBlockCalled)
 }
