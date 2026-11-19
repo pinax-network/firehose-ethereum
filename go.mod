@@ -292,3 +292,5 @@ replace (
 )
 
 retract v1.4.5 //included private repositories
+
+replace github.com/klauspost/compress => github.com/klauspost/compress v1.20.1

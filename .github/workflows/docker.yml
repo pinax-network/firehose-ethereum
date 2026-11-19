@@ -45,7 +45,7 @@ jobs:
     needs: [setup]
     strategy:
       matrix:
-        architecture: [amd64, arm64]
+        architecture: [amd64] # INC-8172 debug build: amd64 only
 
     runs-on: ${{ matrix.architecture == 'arm64' && 'ubuntu-24.04-arm' || 'ubuntu-24.04' }}
 
